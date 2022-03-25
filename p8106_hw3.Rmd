@@ -1,0 +1,73 @@
+---
+title: "P8106 HW3"
+author: "Shihui Zhu"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage{lipsum}
+- \pagestyle{fancy}
+- \fancyhead[R]{\thepage}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+--- 
+
+\newpage
+
+```{r setup, include=FALSE}
+# This chunk loads all the packages used in this homework
+library(caret)
+library(MASS)
+library(mlbench)
+library(pROC)
+library(klaR)
+library(ggplot2)
+library(tidyverse)
+
+# General figure set up
+knitr::opts_chunk$set(
+  # hide warning messages
+  warning = FALSE
+)
+```
+
+## Car Gas Mileage
+
+Data Description: 
+
+Dependent: 
+* mpg_cat: whether the miles per gallon of a car is high or low
+
+Predictors:
+* cylinders: Number of cylinders between 4 and 8
+* displacement: Engine displacement (cu. inches)
+* horsepower: Engine horsepower
+* weight: Vehicle weight (lbs.)
+* acceleration: Time to accelerate from 0 to 60 mph (sec.)
+* year: Model year (modulo 100)
+* origin: Origin of car (1. American, 2. European, 3. Japanese)
+
+### Read in Data and Split training and testing set
+```{r input}
+cars <- read_csv("auto.csv") %>% janitor::clean_names() %>% na.omit()
+# training data (70%) and test data (30%)
+set.seed(1)
+rowTrain <- createDataPartition(y = cars$mpg_cat,
+                                p = 0.7,
+                                list = FALSE)
+```
+
+### (a) Produce some graphical or numerical summaries of the data
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
